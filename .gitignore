@@ -1,0 +1,5 @@
+.idea
+base.db
+*.db
+test_main.http
+/venv

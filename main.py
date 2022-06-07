@@ -11,7 +11,9 @@ from pydantic import BaseModel
 from sqlalchemy import Column, String, Boolean
 from starlette import status
 
+from settings import Settings
 
+settings = Settings(_env_file='.env', _env_file_encoding='utf-8')
 app = FastAPI()
 
 

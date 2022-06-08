@@ -2,9 +2,8 @@ from datetime import datetime
 
 import bcrypt
 import jwt
-from fastapi_viewsets.db_conf import get_session
 
-from settings import settings
+from core.settings import settings
 
 
 def decode_token(token):

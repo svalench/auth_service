@@ -9,8 +9,8 @@ from sqlalchemy import or_
 from starlette import status
 
 from models.model import User
-from schema import UserSchema
-from utils import get_password_hash, create_access_token, decode_token
+from models.schema import UserSchema
+from core.utils import get_password_hash, create_access_token, decode_token
 
 router = APIRouter()
 

@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     items_per_user: int = 50
     secret_key = 'SECRET_KEY'
     algorithm = "HS256"
+    docs_username = "valenchits"
+    docs_password = "123"
 
 
 settings = Settings(_env_file='.env', _env_file_encoding='utf-8')

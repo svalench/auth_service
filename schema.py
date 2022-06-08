@@ -10,26 +10,29 @@ from starlette import status
 class UserSchema(BaseModel):
     """Pydantic Schema"""
     id: Optional[str]
-    username: Optional[str]
-    email: Optional[str]
-    phone: Optional[str]
-    password: str or None
+    username: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    password: str
     is_admin: Optional[bool]
 
     @validator("phone")
     def check_phoneNumber_format(cls, v):
-        regExs = (r"\(\w{3}\) \w{3}\-\w{4}", r"^\w{3}\-\w{4}$")
-        if not re.search(regExs[0], v):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="not valid phone")
+        if v:
+            regExs = (r"\(\w{3}\) \w{3}\-\w{4}", r"^\w{3}\-\w{4}$")
+            if not re.search(regExs[0], v):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="not valid phone")
         return v
 
     @validator("email")
     def validate_email_user(cls, v):
-        try:
-            emailObject = validate_email(v)
-            return emailObject.email
-        except Exception as e:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        if v:
+            try:
+                emailObject = validate_email(v)
+                return emailObject.email
+            except Exception as e:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f'Error validate email: {str(e)}')
+        return v
 
     class Config:
         orm_mode = True

@@ -12,4 +12,6 @@ class User(Base):
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     username = Column(String, unique=True)
     password = Column(String(255))
+    email = Column(String(255))
+    phone = Column(String(255))
     is_admin = Column(Boolean, default=False)

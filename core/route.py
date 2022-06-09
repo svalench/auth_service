@@ -8,8 +8,8 @@ from fastapi_viewsets.db_conf import Base, engine, get_session
 from sqlalchemy import or_
 from starlette import status
 
-from models.model import User
-from models.schema import UserSchema
+from models.model import User, Emails
+from models.schema import UserSchema, EmailsSchema
 from core.utils import get_password_hash, create_access_token, decode_token
 
 router = APIRouter()
@@ -24,8 +24,20 @@ protected_user_model = BaseViewset(endpoint='/user',
                                    tags=['users']
                                    )
 
-protected_user_model.register(methods=['LIST', 'GET', 'PATCH'],
-                              protected_methods=['LIST', 'GET', 'PATCH'],
+protected_user_model.register(methods=['LIST', 'GET', 'PATCH', 'DELETE'],
+                              protected_methods=['LIST', 'GET', 'PATCH', 'DELETE'],
+                              oauth_protect=oauth2_scheme)
+
+
+protected_email_model = BaseViewset(endpoint='/emails',
+                                   model=Emails,
+                                   response_model=EmailsSchema,
+                                   db_session=get_session,
+                                   tags=['emails']
+                                   )
+
+protected_email_model.register(methods=['LIST', 'GET', 'PATCH', 'POST', 'PUT', 'DELETE'],
+                              protected_methods=['LIST', 'GET', 'PATCH', 'POST', 'PUT', 'DELETE'],
                               oauth_protect=oauth2_scheme)
 
 

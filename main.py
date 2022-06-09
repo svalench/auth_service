@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.openapi.utils import get_openapi
 
-from core.route import protected_user_model, router
+from core.route import protected_user_model, router, protected_email_model
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -36,5 +36,6 @@ async def openapi(username: str = Depends(get_current_username)):
     return get_openapi(title="FastAPI", version="0.1.0", routes=app.routes)
 
 app.include_router(protected_user_model)
+app.include_router(protected_email_model)
 app.include_router(router)
 

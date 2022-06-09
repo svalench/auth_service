@@ -7,8 +7,10 @@ from pydantic import BaseModel, validator
 from starlette import status
 
 
-class Emails(BaseModel):
+class EmailsSchema(BaseModel):
     """email schema"""
+    id: Optional[str]
+    parent_id: str
     email: Optional[str] = None
 
     @validator("email")
@@ -25,7 +27,7 @@ class Emails(BaseModel):
         orm_mode = True
 
 
-class Phones(BaseModel):
+class PhonesSchema(BaseModel):
     """email schema"""
     phone: Optional[str] = None
 
@@ -47,8 +49,8 @@ class UserSchema(BaseModel):
     username: Optional[str] = None
     address: Optional[str] = None
     password: str
-    phones: Optional[List[Phones]] = None
-    emails: Optional[List[Emails]] = None
+    phones: Optional[List[PhonesSchema]] = None
+    emails: Optional[List[EmailsSchema]] = None
     is_admin: Optional[bool]
 
     class Config:
